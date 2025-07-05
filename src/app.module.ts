@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PdfModule } from './pdf/pdf.module';
 import { DocumentModule } from './document/document.module';
-import { DocumensoModule } from './documenso/documenso.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [PdfModule, DocumentModule, DocumensoModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+    DocumentModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
