@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Post,
   UploadedFile,
@@ -7,12 +8,11 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { PdfService } from './pdf.service';
-
+import { DocumentService } from './document.service';
+import { UploadPdfDto } from './dto/document.dto';
 @Controller('pdf')
-export class PdfController {
-  constructor(private readonly pdfService: PdfService) {}
-
+export class DocumentController {
+  constructor(private readonly documentService: DocumentService) {}
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -20,7 +20,7 @@ export class PdfController {
         destination: './uploads',
         filename: (req, file, cb) => {
           const ext = extname(file.originalname);
-          cb(null, `${file.originalname}${ext}`);
+          cb(null, `${file.originalname}`);
         },
       }),
       fileFilter: (req, file, cb) => {
@@ -31,7 +31,10 @@ export class PdfController {
       },
     }),
   )
-  uploadPdf(@UploadedFile() file: Express.Multer.File) {
-    return this.pdfService.handleUpload(file);
+  async uploadPdf(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: UploadPdfDto,
+  ) {
+    return await this.documentService.handleUpload(file, body);
   }
 }
