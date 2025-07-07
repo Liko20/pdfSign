@@ -7,38 +7,61 @@ import {
   IsBoolean,
   IsOptional,
   IsEnum,
+  IsDefined,
+  IsObject,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+class EsignTag {
+  @IsNumber()
+  reciepientId: number;
 
-class Position {
+  @IsNumber()
+  page: number;
+
   @IsNumber()
   x: number;
 
   @IsNumber()
   y: number;
+
+  @IsNumber()
+  width?: number;
+
+  @IsNumber()
+  height?: number;
 }
 
+export class AddEsignTagsDto {
+  @IsDefined()
+  documentId: string;
+
+  @IsDefined()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => EsignTag)
+  role1Tag: EsignTag;
+
+  @IsDefined()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => EsignTag)
+  role2Tag: EsignTag;
+}
 export class UploadPdfDto {
+  @IsOptional()
   @IsString()
   role3Name: string;
+
+  @IsOptional()
   @IsString()
   role2Name: string;
+
+  @IsOptional()
   @IsString()
   title: string;
+
   @IsEmail()
   email: string;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Position)
-  @Transform(({ value }) => {
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      return [];
-    }
-  })
-  positions: Position[];
 }
 
 export class RecipientDto {
