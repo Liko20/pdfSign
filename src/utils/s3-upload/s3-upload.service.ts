@@ -24,8 +24,6 @@ export class S3UploadService {
         maxBodyLength: Infinity,
       });
 
-      fs.unlinkSync(file.path);
-
       return { message: 'Uploaded and cleaned up successfully!' };
     } catch (error) {
       // console.error(
