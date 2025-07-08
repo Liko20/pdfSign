@@ -26,10 +26,11 @@ export class DocumensoApiService {
       console.log('Document created with ID:', documentId);
       return response;
     } catch (error) {
-      console.error(
-        'Error:',
-        JSON.stringify(error.response?.data || error.message, null, 2),
-      );
+      console.log('error uploading to s3');
+      // console.error(
+      //   'Error:',
+      //   JSON.stringify(error.response?.data || error.message, null, 2),
+      // );
       throw error;
     }
   }
@@ -72,7 +73,7 @@ export class DocumensoApiService {
       { headers: { Authorization: process.env.DOCUMENSO_API_KEY } },
     );
   }
-  
+
   async addRecipient(id: string) {
     const res = await axios.post(
       `${process.env.DOCUMENSO_API_URL}/documents/${id}/recipients`,

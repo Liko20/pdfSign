@@ -18,7 +18,7 @@ export class DocumentService {
     // assuming now we only need to do it for 2 roles
     // if we want dynamic number of roles, we can add a loop here to populate the data
     // and we will need an database to keep track of the documents and their recipients
-
+    console.log('file', file);
     const documentPayload: CreateDocumentDto = {
       title: body.title || 'Contract',
       recipients: [

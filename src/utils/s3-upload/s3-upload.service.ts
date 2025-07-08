@@ -24,14 +24,12 @@ export class S3UploadService {
         maxBodyLength: Infinity,
       });
 
-      fs.unlinkSync(file.path);
-
       return { message: 'Uploaded and cleaned up successfully!' };
     } catch (error) {
-      console.error(
-        'Error uploading file to S3:',
-        error.response?.data || error.message,
-      );
+      // console.error(
+      //   'Error uploading file to S3:',
+      //   error.response?.data || error.message,
+      // );
       throw error;
     }
   }
