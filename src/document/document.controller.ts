@@ -37,6 +37,8 @@ export class DocumentController {
     @UploadedFile() file: Express.Multer.File,
     @Body() body: UploadPdfDto,
   ) {
+    console.log('inside controller');
+    console.log('file', file);
     return await this.documentService.handleUpload(file, body);
   }
 
